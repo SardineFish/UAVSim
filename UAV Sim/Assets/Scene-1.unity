@@ -151,9 +151,63 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 65595982534536092, guid: 535a4600d9f835c4ea3569fc30078285,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 535a4600d9f835c4ea3569fc30078285, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &414279548 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1666784737717652, guid: 535a4600d9f835c4ea3569fc30078285,
+    type: 2}
+  m_PrefabInternal: {fileID: 29174657}
+--- !u!1 &626715540 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1106091754952368, guid: 535a4600d9f835c4ea3569fc30078285,
+    type: 2}
+  m_PrefabInternal: {fileID: 29174657}
+--- !u!114 &626715541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 626715540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9903ac0d0a5b71546b841b1c15a04831, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PivotsObject:
+  - {fileID: 882315012}
+  - {fileID: 414279548}
+  - {fileID: 777622767}
+  - {fileID: 1634268019}
+  Pivots: []
+--- !u!1 &777622767 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1762988690266860, guid: 535a4600d9f835c4ea3569fc30078285,
+    type: 2}
+  m_PrefabInternal: {fileID: 29174657}
+--- !u!1 &882315012 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1729889739718520, guid: 535a4600d9f835c4ea3569fc30078285,
+    type: 2}
+  m_PrefabInternal: {fileID: 29174657}
+--- !u!114 &882315013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 882315012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 041fe8f5f34b93b4992daec194b8d05e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SpinSpeed: 120
 --- !u!1 &954472744
 GameObject:
   m_ObjectHideFlags: 0
@@ -401,3 +455,8 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &1634268019 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1234846104135202, guid: 535a4600d9f835c4ea3569fc30078285,
+    type: 2}
+  m_PrefabInternal: {fileID: 29174657}
