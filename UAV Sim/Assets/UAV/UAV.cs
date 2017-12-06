@@ -8,9 +8,13 @@ public class UAV : MonoBehaviour {
 
     public List<Pivot> Pivots = new List<Pivot>();
 
-    new Rigidbody rigidbody;
+    public Vector3 Acceleration;
+
+    public new Rigidbody rigidbody{ get; set; }
+
+    private Vector3 lastV;
     // Use this for initialization
-	[ExecuteInEditMode]
+    [ExecuteInEditMode]
     void Start () {
         rigidbody = GetComponent<Rigidbody>();
         Pivots.Clear();
@@ -27,6 +31,13 @@ public class UAV : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
 	}
+
+    void FixedUpdate()
+    {
+        Acceleration = (rigidbody.velocity - lastV) / Time.fixedDeltaTime;
+        lastV = rigidbody.velocity;
+
+        
+    }
 }
