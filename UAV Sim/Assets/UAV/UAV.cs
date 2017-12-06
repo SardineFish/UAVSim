@@ -15,6 +15,8 @@ public class UAV : MonoBehaviour {
     public new Rigidbody rigidbody{ get; set; }
 
     private Vector3 lastV;
+
+
     // Use this for initialization
     [ExecuteInEditMode]
     void Start () {
@@ -49,17 +51,36 @@ public class UAV : MonoBehaviour {
         else if (acte<-AccelerationLimit)
             acte = -AccelerationLimit;
         rigidbody.AddForce(new Vector3(0,acte,0), ForceMode.Acceleration);
+        if(Mathf.Abs(transform.position.y-HeightSet)<0.1 && Mathf.Abs(Derivative) < 0.1)
+        {
+            timmer = false;
+        }
+        if (timmer)
+            TimeCost += Time.fixedDeltaTime;
     }
     public float PIDVelocity(float setPoint)
     {
         var error = setPoint - transform.position.y;
         return Kp * error;
     }
-
+    
     public float HeightPreSet = 0;
-    public float HeightSet { get; set; }
+    public float HeightSet
+    {
+        get { return HeightPreSet; }
+        set
+        {
+            HeightPreSet = value;
+            TimeCost = 0;
+            timmer = true;
+        }
+    }
 
     public float AccelerationLimit = 0;
+
+    [System.NonSerialized]
+    public float TimeCost = 0;
+    bool timmer = false;
 
     public float Kp = 1f;
     public float Ki = 0;
