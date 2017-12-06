@@ -30,6 +30,7 @@ public class UAV : MonoBehaviour {
             Pivots.Add(pivot);
         }
         Velocity = rigidbody.velocity;
+        HeightSet = HeightPreSet;
     }
 	
 	// Update is called once per frame
@@ -42,7 +43,12 @@ public class UAV : MonoBehaviour {
         //transform.Translate(Velocity * Time.fixedDeltaTime);
         Acceleration = (rigidbody.velocity - lastV) / Time.fixedDeltaTime;
         lastV = rigidbody.velocity;
-        rigidbody.AddForce(new Vector3(0,PIDAccelerate(HeightSet),0), ForceMode.Acceleration);
+        var acte = PIDAccelerate(HeightSet);
+        if(acte>AccelerationLimit)
+            acte = AccelerationLimit;
+        else if (acte<-AccelerationLimit)
+            acte = -AccelerationLimit;
+        rigidbody.AddForce(new Vector3(0,acte,0), ForceMode.Acceleration);
     }
     public float PIDVelocity(float setPoint)
     {
@@ -50,7 +56,10 @@ public class UAV : MonoBehaviour {
         return Kp * error;
     }
 
-    public float HeightSet = 5;
+    public float HeightPreSet = 0;
+    public float HeightSet { get; set; }
+
+    public float AccelerationLimit = 0;
 
     public float Kp = 1f;
     public float Ki = 0;
