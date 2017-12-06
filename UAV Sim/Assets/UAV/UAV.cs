@@ -16,6 +16,8 @@ public class UAV : MonoBehaviour {
 
     private Vector3 lastV;
 
+    public float MaxPower;
+
 
     // Use this for initialization
     [ExecuteInEditMode]
@@ -30,14 +32,17 @@ public class UAV : MonoBehaviour {
                 pivot = obj.AddComponent<Pivot>();
             }
             Pivots.Add(pivot);
+            pivot.MaxPower = MaxPower / PivotsObject.Count;
+            pivot.uav = this;
         }
         Velocity = rigidbody.velocity;
         HeightSet = HeightPreSet;
     }
 	
 	// Update is called once per frame
-	void Update () {
-	}
+	void Update ()
+    {
+    }
 
     void FixedUpdate()
     {
@@ -46,17 +51,32 @@ public class UAV : MonoBehaviour {
         Acceleration = (rigidbody.velocity - lastV) / Time.fixedDeltaTime;
         lastV = rigidbody.velocity;
         var acte = PIDAccelerate(HeightSet);
-        if(acte>AccelerationLimit)
+        if (acte > AccelerationLimit)
             acte = AccelerationLimit;
-        else if (acte<-AccelerationLimit)
-            acte = -AccelerationLimit;
-        rigidbody.AddForce(new Vector3(0,acte,0), ForceMode.Acceleration);
-        if(Mathf.Abs(transform.position.y-HeightSet)<0.1 && Mathf.Abs(Derivative) < 0.1)
+        else if (acte < Physics.gravity.y)
+            acte = Physics.gravity.y;
+        Debug.Log(acte);
+        var force = (acte - Physics.gravity.y) * rigidbody.mass;
+        foreach (var pivot in Pivots)
+        {
+            pivot.Force = force / Pivots.Count;
+        }
+        //rigidbody.AddForce(Vector3.up * force, ForceMode.Impulse);
+
+        //rigidbody.AddForce(-Physics.gravity * rigidbody.mass, ForceMode.Impulse);
+
+
+        if (Mathf.Abs(transform.position.y-HeightSet)<0.1 && Mathf.Abs(Derivative) < 0.1)
         {
             timmer = false;
         }
         if (timmer)
             TimeCost += Time.fixedDeltaTime;
+
+        foreach (var pivot in Pivots)
+        {
+            pivot.Simulate();
+        }
     }
     public float PIDVelocity(float setPoint)
     {

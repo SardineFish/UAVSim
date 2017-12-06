@@ -28,7 +28,9 @@ public class UAVEditor : Editor {
         EditorGUILayout.LabelField("Velocity: " + uav.rigidbody.velocity);
         EditorGUILayout.LabelField("Time: " + uav.TimeCost.ToString());
         EditorGUILayout.Space();
-        uav.AccelerationLimit = EditorGUILayout.FloatField("Acceleration Limit", uav.AccelerationLimit);
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("AccelerationLimit"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("MaxPower"));
+
         EditorGUILayout.Space();
         heightSet = EditorGUILayout.Slider("Height Set",heightSet, 0, 100);
         if(GUILayout.Button("Set Height"))
@@ -39,18 +41,9 @@ public class UAVEditor : Editor {
         EditorGUILayout.Space();
         if (PIDParamShow = EditorGUILayout.Foldout(PIDParamShow, "PID Parameters"))
         {
-            if (Application.isEditor)
-            {
-                EditorGUILayout.PropertyField(serializedObject.FindProperty("Kp"));
-                EditorGUILayout.PropertyField(serializedObject.FindProperty("Ki"));
-                EditorGUILayout.PropertyField(serializedObject.FindProperty("Kd"));
-            }
-            else
-            {
-                uav.Kp = EditorGUILayout.FloatField("Kp", uav.Kp);
-                uav.Ki = EditorGUILayout.FloatField("Ki", uav.Ki);
-                uav.Kd = EditorGUILayout.FloatField("Kd", uav.Kd);
-            }
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("Kp"));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("Ki"));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("Kd"));
             EditorGUILayout.LabelField("Integral: " + uav.Integral.ToString());
             EditorGUILayout.LabelField("Derivative: " + uav.Derivative.ToString());
         }
